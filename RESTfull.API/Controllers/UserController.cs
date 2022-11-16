@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Mvc;
 using RESTfull.Domain;
 using RESTfull.Infrastructure;
 
@@ -6,43 +7,43 @@ namespace RESTfull.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly Context _context;
-        private readonly UsersRepository _UsersRepository;
-        public UsersController(Context context)
+        private readonly UserRepository _userRepository;
+        public UserController(Context context)
         {
             _context = context;
-            _UsersRepository = new UsersRepository(_context);
+            _userRepository = new UserRepository(_context);
         }
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Users>>> GetUserss()
+        public async Task<ActionResult<IEnumerable<User>>> GetUserss()
         {
             //return await _context.Userss.ToListAsync();
-            return await _UsersRepository.GetAllAsync();
+            return await _userRepository.GetAllAsync();
         }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Users>> GetUsers(int id)
+        public async Task<ActionResult<User>> GetUsers(int id)
         {
             //var Users = await _context.Userss.FindAsync(id);
-            var Users = await _UsersRepository.GetByIdAsync(id);
-            if (Users == null)
+            var user = await _userRepository.GetByIdAsync(id);
+            if (user == null)
             {
                 return NotFound();
             }
-            return Users;
+            return user;
         }
 
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUsers(int id, Users Users)
+        public async Task<IActionResult> PutUsers(int id, User user)
         {
-            if (id != Users.Id)
+            if (id != user.Id)
             {
                 return BadRequest();
             }
@@ -67,7 +68,7 @@ namespace RESTfull.API.Controllers
             }
             */
 
-            await _UsersRepository.UpdateAsync(Users);
+            await _userRepository.UpdateAsync(user);
 
             return NoContent();
         }
@@ -75,35 +76,35 @@ namespace RESTfull.API.Controllers
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Users>> PostUsers(Users Users)
+        public async Task<ActionResult<User>> PostUsers(User user)
         {
-            //_context.Userss.Add(Users);
+            //_context.Users.Add(Users);
             //await _context.SaveChangesAsync();
-            await _UsersRepository.AddAsync(Users);
-            return CreatedAtAction("GetUsers", new { id = Users.Id }, Users);
+            await _userRepository.AddAsync(user);
+            return CreatedAtAction("GetUsers", new { id = user.Id }, user);
         }
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUsers(int id)
         {
-            //var Users = await _context.Userss.FindAsync(id);
-            var Users = await _UsersRepository.GetByIdAsync(id);
-            if (Users == null)
+            //var user = await _context.Users.FindAsync(id);
+            var user = await _userRepository.GetByIdAsync(id);
+            if (user == null)
             {
                 return NotFound();
             }
 
-            //_context.Userss.Remove(Users);
+            //_context.Users.Remove(Users);
             //await _context.SaveChangesAsync();
-            await _UsersRepository.DeleteAsync(id);
+            await _userRepository.DeleteAsync(id);
 
             return NoContent();
         }
 
-        private bool UsersExists(int id)
+        private bool UserExists(int id)
         {
-            return _context.Userss.Any(e => e.Id == id);
+            return _context.Users.Any(e => e.Id == id);
         }
     }
 }

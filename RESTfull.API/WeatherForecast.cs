@@ -1,4 +1,4 @@
-namespace RESTfull.API
+namespace RESTfull.Domain
 {
     public class WeatherForecast
     {
