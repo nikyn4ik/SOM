@@ -20,8 +20,8 @@ namespace RESTfull.Infrastructure
         public async Task<List<User>> GetAllAsync()
         {
             return await _context.Users.OrderBy(p => p.FIO).ToListAsync();
-            //return await _context.Users.OrderBy(p => p.City).ToListAsync();
-            //return await _context.Users.OrderBy(p => p.Age).ToListAsync();
+            return await _context.Users.OrderBy(p => p.City).ToListAsync();
+            return await _context.Users.OrderBy(p => p.Age).ToListAsync();
         }
         public async Task<User> GetByIdAsync(int id)
         {
