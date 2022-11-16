@@ -21,7 +21,7 @@ namespace RESTfull.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUserss()
         {
-            //return await _context.Userss.ToListAsync();
+            //return await _context.Users.ToListAsync();
             return await _userRepository.GetAllAsync();
         }
 

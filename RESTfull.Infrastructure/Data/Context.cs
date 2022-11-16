@@ -7,29 +7,33 @@ namespace RESTfull.Infrastructure //логика взаимодействия с
 {
     public class Context : DbContext
     {
-        //public Context()
-        //{
+        public Context()
+        {
 
-        //} 
-        public Context(DbContextOptions<Context> options) : base(options)
+        }
+        public Context(DbContextOptions<Context> options) 
+            : base(options)
         {
         }
         public DbSet<User> Users { get; set; }
-        // public DbSet<User> Users => Set<User>();
-        public Context() => Database.EnsureCreated();
+        ////public DbSet<User> Users => Set<User>();
+        ////public Context() => Database.EnsureCreated();
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer("Data Source=RESTfull.db");
-            }
-        }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            //modelBuilder.Entity<Users>()
-            //    .ToTable("Users").HasKey(p => p.Id);
-            modelBuilder.Entity<User>().ToTable("Users");
-        }
+        ////protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        ////{
+        ////    optionsBuilder.UseSqlServer("RESTfull", builder =>
+        ////    {
+        ////        builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+        ////    });
+        ////    base.OnConfiguring(optionsBuilder);
+        ////}
+
+
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    //modelBuilder.Entity<Users>()
+        //    //    .ToTable("Users").HasKey(p => p.Id);
+        //    modelBuilder.Entity<User>().ToTable("Users");
+        //}
     }
 }
